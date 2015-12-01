@@ -27,12 +27,12 @@
   "devDependencies": {
     "chai": "^1.9.1",
     "grunt": "^0.4.5",
-    "grunt-mocha-test": "^0.11.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "redis": "^0.12.1",
-    "express": "^3.16.8",
+    "grunt-mocha-test": "^0.11",
+    "grunt-contrib-jshint": "^0.10",
+    "redis": "^2",
+    "express": "^4.13",
     "restjs": "azuqua/restjs",
-    "async": "^0.9.0"
+    "async": "^1.4"
   },
   "keywords": [
     "azuqua",

@@ -189,7 +189,7 @@ describe("JWT Redis Session Tests", function(){
 			var session = { name: "Don Draper", realName: "Richard Witman" };
 
 			server.addRoute("/ping", "get", function(req, res){
-				_.extend(req.session, session);
+				req.session = Object.assign(session);
 				req.session.update(function(error){
 					assert.notOk(error, "No error when updating session");
 					res.json(req.session.toJSON());
@@ -199,7 +199,7 @@ describe("JWT Redis Session Tests", function(){
 			request({ method: "get", path: "/ping" }, { accessToken: token }, function(error, resp){
 				assert.notOk(error, "Ping did not return an error");
 				assert.isObject(resp, "Ping response is an object");
-				_.each(session, function(val, key){
+				_.forEach(session, function(val, key){
 					assert.property(resp, key, "Response contains key for session property");
 					assert.equal(resp[key], session[key], "Response has correct value for key");
 				});
@@ -312,7 +312,7 @@ describe("JWT Redis Session Tests", function(){
 			server.addRoute("/ping", "get", function(req, res){
 				assert.isObject(req[customRequestKey], "Request object has JWT object");
 				assert.isObject(req[customRequestKey].claims, "Request object has JWT claims object");
-				_.each(claims, function(val, key){
+				_.forEach(claims, function(val, key){
 					assert.ok(req[customRequestKey].claims[key], "Request claims key matches original claims");
 					assert.equal(req[customRequestKey].claims[key], val, "Request claims value matches orignal claims value");
 				});

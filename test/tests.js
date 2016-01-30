@@ -144,7 +144,7 @@ describe("JWT Redis Session Tests", function(){
 
 		it("Should allow the user to update and reload a session", function(done){
 
-			server.addRoute("/ping", "get", function(req, res){
+			server.addRoute("/ping1", "get", function(req, res){
 				req.session.foo = "bar";
 				req.session.update(function(error){
 					assert.notOk(error, "No error when updating session");
@@ -156,11 +156,11 @@ describe("JWT Redis Session Tests", function(){
 				});
 			});
 
-			request({ method: "get", path: "/ping" }, { accessToken: token }, function(error, resp){
+			request({ method: "get", path: "/ping1" }, { accessToken: token }, function(error, resp){
 				assert.notOk(error, "Ping did not return an error");
 				assert.isObject(resp, "Ping response is an object");
 				assert.property(resp, "foo", "Response has new foo property");
-				server.removeRoute("/ping", "get");
+				server.removeRoute("/ping1", "get");
 				done();
 			});
 
@@ -188,22 +188,22 @@ describe("JWT Redis Session Tests", function(){
 
 			var session = { name: "Don Draper", realName: "Richard Witman" };
 
-			server.addRoute("/ping", "get", function(req, res){
-				req.session = Object.assign(session);
+			server.addRoute("/ping2", "get", function(req, res){
+				req.session = Object.assign(req.session, session);
 				req.session.update(function(error){
 					assert.notOk(error, "No error when updating session");
 					res.json(req.session.toJSON());
 				});
 			});
 
-			request({ method: "get", path: "/ping" }, { accessToken: token }, function(error, resp){
+			request({ method: "get", path: "/ping2" }, { accessToken: token }, function(error, resp){
 				assert.notOk(error, "Ping did not return an error");
 				assert.isObject(resp, "Ping response is an object");
 				_.forEach(session, function(val, key){
 					assert.property(resp, key, "Response contains key for session property");
 					assert.equal(resp[key], session[key], "Response has correct value for key");
 				});
-				server.removeRoute("/ping", "get");
+				server.removeRoute("/ping2", "get");
 				done();
 			});
 

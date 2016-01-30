@@ -14,13 +14,13 @@ module.exports = {
 
 	removeRoute: function(path, method){
 		if(method === "all"){
-			_.forEach(app.routes, function(routes, _method){
+			_.forEach(app._router.stack, function(routes, _method){
 				_.remove(routes, function(route){
 					return route.path === path;
 				});
 			});
 		}else{
-			_.remove(app.routes[method], function(route){
+			_.remove(app._router.stack[method], function(route){
 				return route.path === path;
 			});
 		}
@@ -47,12 +47,12 @@ module.exports = {
 
 		app = express();
 
-		app.use(express.urlencoded());
-		app.use(express.json());
+		//app.use(express.urlencoded());
+		//app.use(express.json());
 
 		setup(app, client, function(port){
 
-			app.use(app.router);
+			//app.use(app.router);
 
 			port = port ? port : 8000;
 

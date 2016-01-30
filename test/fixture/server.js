@@ -14,7 +14,7 @@ module.exports = {
 
 	removeRoute: function(path, method){
 		if(method === "all"){
-			_.each(app.routes, function(routes, _method){
+			_.forEach(app.routes, function(routes, _method){
 				_.remove(routes, function(route){
 					return route.path === path;
 				});

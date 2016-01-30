@@ -22,7 +22,7 @@
   "dependencies": {
     "node-uuid": "^1",
     "jsonwebtoken": "^5",
-    "lodash": "^4"
+    "lodash.reduce": "^4"
   },
   "devDependencies": {
     "chai": "^3",
@@ -32,7 +32,8 @@
     "redis": "^2",
     "express": "^4",
     "restjs": "azuqua/restjs",
-    "async": "^1"
+    "async": "^1",
+    "lodash": "^4"
   },
   "keywords": [
     "azuqua",

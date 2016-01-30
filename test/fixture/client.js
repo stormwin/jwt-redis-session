@@ -1,6 +1,5 @@
 
-var RestJS = require("restjs"),
-	_ = require("lodash");
+var RestJS = require("restjs");
 
 if(RestJS.Rest)
 	RestJS = RestJS.Rest;
@@ -55,7 +54,7 @@ module.exports = function(options, data, callback){
 	};
 	if(options.method.toLowerCase() === "post"){
 		data = JSON.stringify(data);
-		options.headers = _.extend(options.headers, {
+		options.headers = Object.assign(options.headers, {
 			"Content-Type": "application/json",
 			"Content-Length": Buffer.byteLength(data)
 		});

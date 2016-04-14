@@ -30,22 +30,22 @@ This module supports a few initialization parameters that can be used to support
 * **maxAge** - The maximum age (in seconds) of a session. 
 
 ```
-var JWTRedisSession = require("jwt-redis-session"),
-	express = require("express"),
-	redis = require("redis");
+const JWTRedisSession = require('jwt-redis-session'),
+	express = require('express'),
+	redis = require('redis');
 
-var redisClient = redis.createClient(),
+const redisClient = redis.createClient(),
 	secret = generateSecretKeySomehow(),
 	app = express();
 
 app.use(JWTRedisSession({
 	client: redisClient,
 	secret: secret,
-	keyspace: "sess:", 
+	keyspace: 'sess:', 
 	maxAge: 86400,
-	algorithm: "HS256",
-	requestKey: "jwtSession",
-	requestArg: "jwtToken"
+	algorithm: 'HS256',
+	requestKey: 'jwtSession',
+	requestArg: 'jwtToken'
 }));
 ```
 
@@ -57,15 +57,15 @@ Create a new JSON Web Token from the provided claims and store any relevant data
 
 ```
 var handleRequest = function(req, res){
-	User.login(req.param("username"), req.param("password"), function(error, user){
+	User.login(req.param('username'), req.param('password'), function(error, user){
 
 		// this will be stored in redis
 		req.jwtSession.user = user.toJSON(); 
 
 		// this will be attached to the JWT
 		var claims = {
-			iss: "my application name",
-			aud: "myapplication.com"
+			iss: 'my application name',
+			aud: 'myapplication.com'
 		};
 
 		req.jwtSession.create(claims, function(error, token){
@@ -82,9 +82,9 @@ var handleRequest = function(req, res){
 The session's UUID, JWT claims, and the JWT itself are all available on the jwtSession object as well. Any of these properties can be used to test for the existence of a valid JWT and session.
 
 ```
-var handleRequest = function(req, res){
+const handleRequest = function(req, res){
 	
-	console.log("Request JWT session data: ", 
+	console.log('Request JWT session data: ', 
 		req.jwtSession.id, 
 		req.jwtSession.claims, 
 		req.jwtSession.jwt
@@ -100,18 +100,18 @@ var handleRequest = function(req, res){
 Any modifications to the jwtSession will be reflected in redis.
 
 ```
-var handleRequest = function(req, res){
+const handleRequest = function(req, res){
 	
 	if(req.jwtSession.id){
 		
-		req.jwtSession.foo = "bar";
+		req.jwtSession.foo = 'bar';
 
 		req.jwtSession.update(function(error){
 			res.json(req.jwtSession.toJSON());
 		});
 
 	}else{
-		res.redirect("/login");
+		res.redirect('/login');
 	}
 };
 ```
@@ -121,7 +121,7 @@ var handleRequest = function(req, res){
 Force a reload of the session data from redis.
 
 ```
-var handleRequest = function(req, res){
+const handleRequest = function(req, res){
 	
 	setTimeout(function(){
 
@@ -137,7 +137,7 @@ var handleRequest = function(req, res){
 ## Refresh the TTL on a Session
 
 ```
-var handleRequest = function(req, res){
+const handleRequest = function(req, res){
 	
 	req.jwtSession.touch(function(error){
 		res.json(req.jwtSession.toJSON());
@@ -151,10 +151,10 @@ var handleRequest = function(req, res){
 Remove the session data from redis. The user's JWT may still be valid within its expiration window, but the backing data in redis will no longer exist. This module will not recognize the JWT when this is the case.
 
 ```
-var handleRequest = function(req, res){
+const handleRequest = function(req, res){
 	
 	req.jwtSession.destroy(function(error){
-		res.redirect("/login");
+		res.redirect('/login');
 	});
 	
 };

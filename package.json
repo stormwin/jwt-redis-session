@@ -26,9 +26,9 @@
   },
   "devDependencies": {
     "chai": "^3",
-    "grunt": "^0",
+    "grunt": "^1",
     "grunt-mocha-test": "^0",
-    "grunt-contrib-jshint": "^0",
+    "grunt-contrib-jshint": "^1",
     "redis": "^2",
     "express": "^4",
     "restjs": "azuqua/restjs",

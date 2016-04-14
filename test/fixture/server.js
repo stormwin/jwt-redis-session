@@ -1,8 +1,9 @@
+'use strict';
 
-var	http = require("http"),
-	express = require("express"),
-	_ = require("lodash"),
-	redis = require("redis");
+const	http = require('http'),
+		express = require('express'),
+		_ = require('lodash'),
+		redis = require('redis');
 
 var client, app, server;
 
@@ -13,8 +14,8 @@ module.exports = {
 	},
 
 	removeRoute: function(path, method){
-		if(method === "all"){
-			_.forEach(app._router.stack, function(routes, _method){
+		if(method === 'all'){
+			_.forEach(app._router.stack, function(routes){
 				_.remove(routes, function(route){
 					return route.path === path;
 				});
@@ -26,7 +27,7 @@ module.exports = {
 		}
 	},
 
-	inspect: function(callback){
+	inspect: function(){
 		return {
 			app: app,
 			client: client,
@@ -38,21 +39,16 @@ module.exports = {
 		
 		client = redis.createClient(
 			process.env.REDIS_PORT || 6379,
-			process.env.REDIS_HOST || "127.0.0.1"
+			process.env.REDIS_HOST || '127.0.0.1'
 		);
 
-		client.on("error", function(e){
-			log("Error with redis server!", e);
+		client.on('error', function(e){
+			log('Error with redis server!', e);
 		});
 
 		app = express();
 
-		//app.use(express.urlencoded());
-		//app.use(express.json());
-
 		setup(app, client, function(port){
-
-			//app.use(app.router);
 
 			port = port ? port : 8000;
 
@@ -64,9 +60,8 @@ module.exports = {
 	},
 
 	end: function(callback){
-		client.end();
+		client.end(true);
 		server.close(callback);
 	}
 
 };
-

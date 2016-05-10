@@ -1,7 +1,7 @@
 {
   "name": "jwt-redis-session",
   "description": "JSON Web Token session middleware backed by Redis",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "authors": "Azuqua",
   "contributors": [
     {
@@ -25,7 +25,7 @@
   "dependencies": {
     "node-uuid": "^1",
     "jsonwebtoken": "^5",
-    "lodash.reduce": "^4"
+    "async": "^1"
   },
   "devDependencies": {
     "chai": "^3",
@@ -35,7 +35,6 @@
     "redis": "^2",
     "express": "^4",
     "restjs": "azuqua/restjs",
-    "async": "^1",
     "lodash": "^4",
     "mocha": "^2"
   },
